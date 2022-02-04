@@ -31,8 +31,8 @@ st.set_page_config(
 def SaeeAMMail(EmailId, Message):
     s = smtplib.SMTP('smtp.gmail.com', 587)
     status =s.starttls()
-    
-    passd = st.text_input("Enter a password", type="password")
+    try:
+        passd = st.text_input("Enter a password", type="password")
     
     s.login("startupsaeeam@gmail.com", passd)
     s.sendmail("startupsaeeam@gmail.com", EmailId, "Your Data Recieved Thanks!-----")

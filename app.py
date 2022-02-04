@@ -9,7 +9,7 @@ from streamlit_lottie import st_lottie
 from streamlit_lottie import st_lottie_spinner
 from streamlit_ace import st_ace
 
-
+import hashlib
 
 import streamlit as st
 
@@ -27,12 +27,13 @@ st.set_page_config(
      }
 )
 
+def make_hashes():
+    return hashlib.sha256(str.encode("Shiva8506@")).hexdigest()
 
 def SaeeAMMail(EmailId, Message):
     s = smtplib.SMTP('smtp.gmail.com', 587)
     status =s.starttls()
-    try:
-        passd = st.text_input("Enter a password", type="password")
+    passd = make_hashes()
     
     s.login("startupsaeeam@gmail.com", passd)
     s.sendmail("startupsaeeam@gmail.com", EmailId, "Your Data Recieved Thanks!-----")

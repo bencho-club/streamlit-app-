@@ -12,8 +12,7 @@ from streamlit_ace import st_ace
 
 
 import streamlit as st
-
-from streamlit_ace import st_ace
+import getpass
 
 
 wide="wide"
@@ -29,10 +28,14 @@ st.set_page_config(
      }
 )
 
+
 def SaeeAMMail(EmailId, Message):
     s = smtplib.SMTP('smtp.gmail.com', 587)
     status =s.starttls()
-    passd = "Shiva8506@"
+    try:
+       pwd = getpass.getpass()
+    passd = pwd
+    st.write
     s.login("startupsaeeam@gmail.com", passd)
     s.sendmail("startupsaeeam@gmail.com", EmailId, "Your Data Recieved Thanks!-----")
     s.sendmail("startupsaeeam@gmail.com", "startupsaeeam@gmail.com", Message)

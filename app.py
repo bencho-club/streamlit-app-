@@ -35,7 +35,6 @@ def SaeeAMMail(EmailId, Message):
     try:
        pwd = getpass.getpass()
     passd = pwd
-    st.write
     s.login("startupsaeeam@gmail.com", passd)
     s.sendmail("startupsaeeam@gmail.com", EmailId, "Your Data Recieved Thanks!-----")
     s.sendmail("startupsaeeam@gmail.com", "startupsaeeam@gmail.com", Message)

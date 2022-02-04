@@ -9,8 +9,6 @@ from streamlit_lottie import st_lottie
 from streamlit_lottie import st_lottie_spinner
 from streamlit_ace import st_ace
 
-import hashlib
-
 import streamlit as st
 
 
@@ -27,20 +25,8 @@ st.set_page_config(
      }
 )
 
-def make_hashes():
-    return hashlib.sha256(str.encode("Shiva8506@")).hexdigest()
 
-def SaeeAMMail(EmailId, Message):
-    s = smtplib.SMTP('smtp.gmail.com', 587)
-    status =s.starttls()
-    passd = make_hashes()
-    
-    s.login("startupsaeeam@gmail.com", passd)
-    s.sendmail("startupsaeeam@gmail.com", EmailId, "Your Data Recieved Thanks!-----")
-    s.sendmail("startupsaeeam@gmail.com", "startupsaeeam@gmail.com", Message)
-    s.quit()
-    inform = "Sucess SaeeAM Recieved Your Mail"
-    return inform
+
 
 def load_lottieurl(url: str):
     r = requests.get(url)
@@ -74,8 +60,7 @@ with st.sidebar:
                        with st.spinner(text='Email Sending'):
                            time.sleep(3)
                            sending = (name+" "+email+" "+number+" "+message)
-                           sendi=SaeeAMMail(email, sending)
-                           st.write(sendi)
+                           st.write(sending)
                        
                        st.success('Done')
                        st.balloons()

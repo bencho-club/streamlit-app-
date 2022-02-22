@@ -235,7 +235,7 @@ elif page == "ClassRoom":
             background_color=bg_color,
             background_image=Image.open(bg_image) if bg_image else None,
             update_streamlit=realtime_update,
-            width=600,
+            width=800,
             drawing_mode=drawing_mode,
             display_toolbar=class2.checkbox("Display toolbar", True),
             key="canvas",

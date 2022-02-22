@@ -8,7 +8,9 @@ import datetime
 from streamlit_lottie import st_lottie
 from streamlit_lottie import st_lottie_spinner
 from streamlit_ace import st_ace
-
+from streamlit_drawable_canvas import st_canvas
+import pandas as pd
+from PIL import Image
 import streamlit as st
 
 
@@ -37,7 +39,7 @@ def load_lottieurl(url: str):
 
 
 with st.sidebar:
-   pages = ["Home", "Coding", "Project"]
+   pages = ["Home", "Coding", "Project", "ClassRoom"]
    page = st.selectbox("Menu", pages)
    
 
@@ -203,4 +205,53 @@ elif page == "Project":
     src= st.text_input(label="Website LInk HEre",value="", placeholder="Enter website link Here", type="default", key="iframe")
 
     st.components.v1.iframe(src, height=600,  scrolling=True)
+
+    
+    
+elif page == "ClassRoom":
+    class1, class2 = st.columns([3, 1])
+    class2.subheader("Parameters")
+
+    with class2:
+
+        # Specify canvas parameters in application
+        stroke_width = class2.slider("Stroke width: ", 1, 25, 3)
+        
+        stroke_color = class2.color_picker("Stroke color hex: ")
+        bg_color = class2.color_picker("Background color hex: ", "#eee")
+        bg_image = class2.file_uploader("Background image:", type=["png", "jpg"])
+        drawing_mode = class2.selectbox(
+            "Drawing tool:", ("freedraw", "line", "rect", "circle", "transform", "point")
+            )
+        realtime_update = class2.checkbox("Update in realtime", True)
+       
+    with class1:
+
+# Create a canvas component
+        canvas_result = st_canvas(
+            fill_color="rgba(255, 165, 0, 0.3)",  # Fixed fill color with some opacity
+            stroke_width=stroke_width,
+            stroke_color=stroke_color,
+            background_color=bg_color,
+            background_image=Image.open(bg_image) if bg_image else None,
+            update_streamlit=realtime_update,
+            width=600,
+            drawing_mode=drawing_mode,
+            display_toolbar=class2.checkbox("Display toolbar", True),
+            key="canvas",
+            )
+
+# Do something interesting with the image data and paths
+        if canvas_result.image_data is not None:
+
+            st.image(canvas_result.image_data)
+        if canvas_result.json_data is not None:
+            objects = pd.json_normalize(canvas_result.json_data["objects"]) # need to convert obj to str because PyArrow
+            for col in objects.select_dtypes(include=['object']).columns:
+                objects[col] = objects[col].astype("str")
+            st.dataframe(objects)
+       
+
+
+
 
